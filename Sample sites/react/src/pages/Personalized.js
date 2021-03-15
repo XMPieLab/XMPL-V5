@@ -15,9 +15,9 @@ export default () => {
 			<p>4 <span xmp-text="xmp['r'].FirstName"></span></p>
 			<p>5 <span xmp-text="{{xmp.r.FirstName}}"></span></p>
 
-			<p xmp-class="xmp.r.FirstName" class="base">Text</p>
-			<p xmp-class="{'red': xmp.r['FirstName'] === 'Allison', 'green': xmp.r.LastName === 'NewLastName12221' }" class="base">Text</p>
-			<div className="grid">
+			<p xmp-class="xmp.r.FirstName" className="base">Text</p>
+			<p xmp-class="{'red': xmp.r['FirstName'] === 'Allison', 'green': xmp.r.LastName === 'NewLastName12221' }" className="base">Text</p>
+			<div className="grid grid--column">
 				<div>
 					<h3>xmp-src</h3>
 					<p>The xmp-src attribute can be used in an img element to declare a variable image URL.</p>
