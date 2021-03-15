@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Sample Recipient Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="./xmpcfg.js"></script>
+    <script src="./xmpl.min.js"></script>
+  </head>
+
+  <body>
+    <div xmp-personalized-controller xmp-cloak>
+      <h1>hello <span xmp-text="xmp.r['FirstName']"></span> <span xmp-text="xmp.r['LastName']"></span></h1>
+      <div><img width="500px" xmp-image-asset="xmp.r['MyImage']"/></div>
+    </div>
+  </body>
+
+</html>
