@@ -1,0 +1,64 @@
+<h3 class="title">Profile</h3>
+<div class="grid grid--column">
+  <div>
+    <div class="form__section">
+      <div class="form__group-title">First Name:</div>
+      <div class="form__group">
+        <span>{{firstName}}</span>
+      </div>
+    </div>
+    <div class="form__section">
+      <div class="form__group-title">Last Name:</div>
+      <div class="form__group">
+        <span>{{lastName}}</span>
+      </div>
+    </div>
+    <div class="form__section">
+      <div class="form__group-title">Email:</div>
+      <div class="form__group">
+        <span>{{email}}</span>
+      </div>
+    </div>
+    <div class="form__section">
+      <div class="form__group-title">Feedback:</div>
+      <div class="form__group">
+        <span>{{feedback}}</span>
+      </div>
+    </div>
+  </div>
+  <div>
+    <form [formGroup]="form" (submit)="saveChanges()">
+      <div class="form__section form__section_sm">
+        <div class="form__group-title">First Name:</div>
+        <div class="form__group">
+          <input class="input__element" type="text" size="30" formControlName="FirstName" />
+        </div>
+      </div>
+      <div class="form__section form__section_sm">
+        <div class="form__group-title">Last Name:</div>
+        <div class="form__group">
+          <input class="input__element" type="text" size="30" formControlName="LastName" />
+        </div>
+      </div>
+      <div class="form__section form__section_sm">
+        <div class="form__group-title">Email:</div>
+        <div class="form__group">
+          <input class="input__element" type="text" size="30" formControlName="Email" />
+        </div>
+      </div>
+      <div class="form__section form__section_sm">
+        <div class="form__group-title">Feedback:</div>
+        <div class="form__group">
+          <input class="input__element" type="text" size="30" formControlName="Feedback" />
+        </div>
+      </div>
+      <button class="btn btn__primary" type="submit">
+        Update
+      </button>
+    </form>
+  </div>
+</div>
+<div class="grid">
+  <a class="link" routerLink="/update-info-xmpl">Show profile using XMPL syntax</a>
+  <a class="link" routerLink="/update-info-js-xmpl">Show profile using XMPL and JS</a>
+</div>
