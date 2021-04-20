@@ -1,5 +1,5 @@
-# XMPL NG SDK
-Welcome to the XMPie XMPL NG SDK.
+# XMPL NG
+Welcome to the XMPie XMPL NG.
 
 This is the central resource for information about XMPL, XMPie's language for personalizing URLs. Using this library you can easily build personalized webpages (PURLs) that are based on XMPie campaigns, with HTML tags.
 
@@ -7,4 +7,4 @@ The technology is built on javascript code, making it very easy to integrate int
 
 The XMPie XMPL server is the server that connects your XMPie campaign with your webpages. The server defines a collection of REST services with which the XMPL library communicates, and makes available for the webpages in form of HTML tags and javascript.
 
-User guide and reference documentation can be found at https://github.com/XMPieLab/XMPL-NG-SDK/wiki
+User guide and reference documentation can be found at https://github.com/XMPieLab/XMPL-NG/wiki
