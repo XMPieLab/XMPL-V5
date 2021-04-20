@@ -17,7 +17,7 @@ function App() {
 				<img src={logo} className='App-logo' alt='logo' width='100' />
 				<div className='App-link'>
 					<NavLink to='/anonymous'>Anonymous page</NavLink>
-					<NavLink to='/personalized?rid=08f72b0e5ac4e8354fea663a1021fcea'>Personalized page</NavLink>
+					<NavLink to='/personalized?rid=Allison.White'>Personalized page</NavLink>
 				</div>
 			</header>
 			<section className={"App-body"}>

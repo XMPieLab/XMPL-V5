@@ -81,6 +81,14 @@ img {
   font-weight: 600;
   min-width: 150px;
 }
+.input__element:required:invalid {
+  border: 1px solid red;
+}
+
+.input__element:required:valid {
+  border: 1px solid green;
+}
+
 .input__element {
   width: 100%;
   background-color: transparent;
