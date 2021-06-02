@@ -1,3 +1,10 @@
+/*!
+ * ==========================================================
+ * Migration tool 1.0.0, build 1
+ * ==========================================================
+ * Copyright 2021 XMPie, LTD.
+ * ==========================================================
+ */
 const { JSDOM } = require('jsdom')
 const fs = require('fs')
 const fsp = fs.promises
@@ -10,6 +17,9 @@ const errorOutput = (error) => console.log(`ERROR :: ${error}`)
 const removeFilePart = dirname => path.parse(dirname).dir;
 
 const baseName = filename => path.parse(filename).base;
+
+const OLD_NAME_LIB = 'xmp.min.js'
+const NEW_NAME_LIB = 'xmpl.min.js'
 
 function expressionTest(str) {
   const expressionsRe = /{{(.*?)}}/gm
@@ -85,8 +95,8 @@ function addFileComment(notSupportedAttr, htmlDoc) {
 }
 
 function updateVersion(string) {
-  const reBuild = /xmpl\/([a-zA-Z0-9-. ]*)\/xmp/ig
-  return string.replace(reBuild, `xmpl/${version}/xmp`).replace('ng-app="xmp.app"', '')
+  const reBuild = /xmpl\/([a-zA-Z0-9-. ]*)\/xmp\/js/ig
+  return string.replace(reBuild, `XMPL-NG/${version}`).replace(OLD_NAME_LIB, NEW_NAME_LIB)
 }
 
 async function addLogs(baseDir, file, notSupportedAttr) {
@@ -108,6 +118,11 @@ async function main(file, baseDir) {
   const ngControllerAttr = document.body.getAttribute('ng-controller')
   controllers
     .forEach(({ ngController, controller }) => ngController === ngControllerAttr && document.body.setAttribute(controller, ''))
+
+  const ngAppController = document.querySelector('[ng-app="xmp.app"]')
+  if (ngAppController) {
+    ngAppController.removeAttribute('ng-app')
+  }
 
   document.body.removeAttribute('ng-controller')
 
