@@ -5,10 +5,10 @@ export default () => {
 	useXmpl();
 
 	return (
-		<div xmp-anonymous-controller={""} className='container'>
-			<h3 className='title'>Registration form</h3>
+		<div xmp-anonymous-controller={""} className='container'> 
 			<div className='grid grid--column'>
 				<div>
+					<h3 className='title'>Registration form</h3>
 					<form
 						xmp-register={""}
 						xmp-signin-auto='true'
@@ -49,7 +49,7 @@ export default () => {
 							</div>
 						</div>
 						<div className='form__section'>
-							<div className='form__group-title'>Password (Age):</div>
+							<div className='form__group-title'>Password:</div>
 							<div className='form__group'>
 								<input
 									className='input__element'
@@ -61,7 +61,7 @@ export default () => {
 							</div>
 						</div>
 						<div className='form__section'>
-							<div className='form__group-title'>Password 2 (Age):</div>
+							<div className='form__group-title'>Confirm Password:</div>
 							<div className='form__group'>
 								<input
 									className='input__element'
@@ -73,12 +73,29 @@ export default () => {
 							</div>
 						</div>
 						<button className='btn btn__primary' type='submit'>
-							<span className='btn__content'>Log in</span>
+							<span className='btn__content'>Register</span>
 						</button>
 					</form>
 				</div>
 				<div>
-					<img src='/assets/registration.jpg' alt='Registration' />
+					<h3 class="title">Sign in form</h3>
+					<form xmp-signin xmp-success-url="/success" xmp-failure-url="/error">
+						<div class="form__section">
+							<div class="form__group-title">Username </div>
+							<div class="form__group">
+								<input class="input__element" type="text" size="30" xmp-username />
+							</div>
+						</div>
+						<div class="form__section">
+							<div class="form__group-title">Password:</div>
+							<div class="form__group">
+								<input class="input__element" type="password" size="30" x xmp-password />
+							</div>
+						</div> 
+						<button class="btn btn__primary" type="submit" >
+							<span class="btn__content" >Sign in</span>
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>

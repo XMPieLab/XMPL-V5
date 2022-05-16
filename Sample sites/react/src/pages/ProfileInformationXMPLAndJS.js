@@ -94,6 +94,12 @@ export const ProfileInformationXMPLAndJS = () => {
 								/>
 							</div>
 						</div>
+						<div class='form__section form__section_sm'>
+							<div class='form__group'>
+								<input type="checkbox" xmp-write-ador="xmp.r['Gift']" 
+								xmp-true-value="subscribe" xmp-false-value="unsubscribed" /> Subscribe to news letter. <b>(using xmp-true-value, xmp-false-value)</b> <br/>
+							</div>
+						</div>					
 						<button className='btn btn__primary' type='submit'>
 							<span className='btn__content'>Update</span>
 						</button>
