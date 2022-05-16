@@ -14,6 +14,13 @@ export class PersonalizedPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    (window as any).xmpProvider.store.xmp.Contacts = [{
+      ID: 1,
+      Name: "Alfred"
+    },{
+      ID: 2,
+      Name: "John"
+    }];
     (window as any).xmpProvider.store.subscribe(this.xmpReady);
   }
 
