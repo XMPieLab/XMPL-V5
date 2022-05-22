@@ -13,8 +13,4 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(f: NgForm) {
-    console.log((window as any).xmpProvider.bind(document.body).store);
-  }
-
 }
