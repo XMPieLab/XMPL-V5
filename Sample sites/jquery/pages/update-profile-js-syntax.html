@@ -115,8 +115,16 @@
         setAdorsToInput();
       }
 
-      window.xmpProvider.api.getAdorValues(accessToken, rid, true, adorList, [], false)
-        .then(getAdors);
+      window.xmpProvider.api.getAdorValues({
+        accessToken:accessToken, 
+        rid: rid, 
+        isLogin: true, 
+        adors: adorList, 
+        resolved: [], 
+        async: false, 
+        isCached: false, 
+        noCache: false
+      }).then(getAdors);
 
       $(' #form ').submit(function (event) {
         event.preventDefault();
