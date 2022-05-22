@@ -12,7 +12,7 @@ export class AppComponent {
 
   constructor(appRef: ApplicationRef) {
     appRef.isStable
-      .pipe(debounceTime((100)))
+      .pipe(debounceTime((300)))
       .subscribe(() => (window as any).xmpProvider.bind(document.body).render());
   }
 }

@@ -8,6 +8,7 @@ import {PersonalizedPageComponent} from './pages/personalized-page/personalized-
 import { UpdatePersonalizedPageComponent } from './pages/update-personalized-page/update-personalized-page.component';
 import { UpdateWithAngularSyntaxPersonalizedPageComponent } from './pages/update-with-angular-syntax-personalized-page/update-with-angular-syntax-personalized-page.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'update-info-js-xmpl', component: UpdateInfoJsXmplComponent },
   { path: 'success', component: SuccessPageComponent},
   { path: 'error', component: ErrorPageComponent},
+  { path: 'login', component: LoginPageComponent},
 ];
 
 @NgModule({

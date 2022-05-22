@@ -35,13 +35,13 @@
     <div>
       <h2>xmp-clicked-trigger</h2>
       <p> <b>xmp-clicked-trigger</b> attribute can be placed on a clickable element to trigger email sending when that element is clicked.</p>
-      <button xmp-clicked-triggered-email="E1">I Like! </button>
+      <button xmp-clicked-triggered-email="E2">I Like! </button>
       <p> or update an email and send multiple emails</p>
       <form xmp-update>
         Email: <input type="text" xmp-write-ador="xmp.r.Email"><br/>
         <input class="btn-primary" type="submit" 
             value="Update" xmp-tracking-action="form submitted" 
-            xmp-success-trigger="E1,E2">
+            xmp-success-trigger="E2">
       </form> 
     </div>
     <div>
@@ -92,11 +92,11 @@
     <h3>xmp-repeat</h3>
     <p>The xmp-repeat attribute is intended to be used with Table ADORs. Table ADOR values are arrays of items, where each item is a dictionary containing keys for the table columns, with matching values for the items.</p>
       <ul>
-        <!-- <span xmp-text="xmp.Contacts[0].Name"></span> -->
-        <div xmp-repeat="item in xmp.Contacts">
+        <div xmp-repeat="item in xmp.r['Kids']">
           <li>
-            <span xmp-repeat-value="item['ID']"></span> 
-            <span xmp-repeat-value="item['Name']"></span>
+            (<span xmp-repeat-value="item['Kid ID']"></span>)
+            <span xmp-repeat-value="item['Kid name']"></span>
+            <span xmp-repeat-value="item['FirstName']"></span> [Game: <span xmp-repeat-value="item['Favorite Game']"></span>]
           </li>
         </div>
       </ul>
@@ -107,7 +107,7 @@
     <form xmp-update xmp-success-track-action="update" xmp-failure-track-action="update failure">
         Click submit to trigger tracking
     <input class="btn-primary" type="submit" 
-                      value="save" xmp-success-url="thanks.html" xmp-tracking-action="form submitted:CTA">
+                      value="save" xmp-success-url="/success" xmp-tracking-action="form submitted:CTA">
   </form> 
   </div>
   <div>

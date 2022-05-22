@@ -35,7 +35,16 @@ export class UpdateWithAngularSyntaxPersonalizedPageComponent implements OnInit 
   getRecipientAdors() {
     const accessToken = localStorage.getItem('serviceToken');
     const adorList = ['FirstName', 'LastName', 'Email', 'Feedback'];
-    (window as any).xmpProvider.api.getAdorValues(accessToken, this.rid, true, adorList, [], false)
+    (window as any).xmpProvider.api.getAdorValues({
+      accessToken:accessToken, 
+        rid: this.rid, 
+        isLogin: true, 
+        adors: adorList, 
+        resolved: [], 
+        async: false, 
+        isCached: false, 
+        noCache: false
+      })
       .then(this.xmpReady)
   }
 

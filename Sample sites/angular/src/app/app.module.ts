@@ -12,6 +12,7 @@ import { UpdatePersonalizedPageComponent } from './pages/update-personalized-pag
 import { UpdateWithAngularSyntaxPersonalizedPageComponent } from './pages/update-with-angular-syntax-personalized-page/update-with-angular-syntax-personalized-page.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { UpdateInfoJsXmplComponent } from './pages/update-info-js-xmpl/update-info-js-xmpl.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { UpdateInfoJsXmplComponent } from './pages/update-info-js-xmpl/update-in
     UpdateWithAngularSyntaxPersonalizedPageComponent,
     WelcomeComponent,
     UpdateInfoJsXmplComponent,
+    LoginPageComponent,
   ],
   imports: [
     CommonModule,
