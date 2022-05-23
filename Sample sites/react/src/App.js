@@ -4,6 +4,7 @@ import "./App.css";
 import { Switch, Route, Redirect, NavLink } from "react-router-dom";
 import AnonymousPage from "./pages/Anonymous";
 import PersonalizedPage from "./pages/Personalized";
+import Login from "./pages/Login";
 import { SuccessPage } from "./pages/Success";
 import { SuccessUpdatePage } from "./pages/SuccessUpdate";
 import { FailurePage } from "./pages/Failure";
@@ -18,6 +19,7 @@ function App() {
 				<div className='App-link'>
 					<NavLink to='/anonymous'>Anonymous page</NavLink>
 					<NavLink to='/personalized?rid=Allison.White'>Personalized page</NavLink>
+					<NavLink to='/login?rid=Allison.White'>Login Page</NavLink>
 				</div>
 			</header>
 			<section className={"App-body"}>
@@ -25,13 +27,16 @@ function App() {
 					<Route path='/anonymous'>
 						<AnonymousPage />
 					</Route>
+					<Route path='/login'>
+						<Login />
+					</Route>
 					<Route path='/personalized'>
 						<PersonalizedPage />
 					</Route>
 					<Route path='/success'>
 						<SuccessPage />
 					</Route>
-          <Route path='/success-update'>
+					<Route path='/success-update'>
 						<SuccessUpdatePage />
 					</Route>
 					<Route path='/failure'>
@@ -40,7 +45,7 @@ function App() {
 					<Route path='/profile-information'>
 						<ProfileInformation />
 					</Route>
-          <Route path='/profile-information-xmpl'>
+          			<Route path='/profile-information-xmpl'>
 						<ProfileInformationXMPL />
 					</Route>
 					<Route path='/profile-information-xmpl-js'>

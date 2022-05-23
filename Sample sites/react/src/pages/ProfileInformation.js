@@ -20,7 +20,16 @@ export const ProfileInformation = () => {
 		const recipientID = localStorage.getItem("xmpRecipientID");
 		const adorList = ["FirstName", "LastName", "Email", "Feedback"];
 		window.xmpProvider.api
-			.getAdorValues(accessToken, recipientID, true, adorList, [], false)
+			.getAdorValues({
+				accessToken: accessToken, 
+				rid: recipientID, 
+				isLogin: true,  
+				adors: adorList, 
+				resolved:[], 
+				async: false,
+				iCached: false,
+				noCache: false
+			})
 			.then(xmpReady);
 	}, []);
 

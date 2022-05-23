@@ -1,6 +1,7 @@
 import React from "react";
 import { useXmpl } from "./utils";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
 	useXmpl();
 
@@ -12,9 +13,8 @@ export default () => {
 					<form
 						xmp-register={""}
 						xmp-signin-auto='true'
-            xmp-success-url='/success'
-            xmp-failure-url='/failure'
-					>
+						xmp-success-url='/success'
+						xmp-failure-url='/failure'>
 						<div className='form__section'>
 							<div className='form__group-title'>First Name:</div>
 							<div className='form__group'>
@@ -74,26 +74,6 @@ export default () => {
 						</div>
 						<button className='btn btn__primary' type='submit'>
 							<span className='btn__content'>Register</span>
-						</button>
-					</form>
-				</div>
-				<div>
-					<h3 class="title">Sign in form</h3>
-					<form xmp-signin xmp-success-url="/success" xmp-failure-url="/error">
-						<div class="form__section">
-							<div class="form__group-title">Username </div>
-							<div class="form__group">
-								<input class="input__element" type="text" size="30" xmp-username />
-							</div>
-						</div>
-						<div class="form__section">
-							<div class="form__group-title">Password:</div>
-							<div class="form__group">
-								<input class="input__element" type="password" size="30" x xmp-password />
-							</div>
-						</div> 
-						<button class="btn btn__primary" type="submit" >
-							<span class="btn__content" >Sign in</span>
 						</button>
 					</form>
 				</div>

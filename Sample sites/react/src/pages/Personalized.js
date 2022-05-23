@@ -2,10 +2,11 @@
 import React from "react";
 import { useXmpl } from "./utils";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
 	useXmpl()
 	return (
-		<div xmp-personalized-controller={''} xmp-load-ador-timeout="2000" xmp-no-caching xmp-tracking-page-name='Personalized page react' xmp-cloak={''} >
+		<div xmp-personalized-controller={''} xmp-load-ador-timeout="2000" xmp-no-caching={''} xmp-tracking-page-name='Personalized page react' xmp-cloak={''} >
 			<p  className="title">
 				Welcome <span xmp-text="xmp.r['FirstName']"></span> <span xmp-text="xmp.r['LastName']"></span>!
 			</p>
@@ -14,7 +15,7 @@ export default () => {
 			<p>3 <span xmp-text="xmp['r']['FirstName']"></span></p>
 			<p>4 <span xmp-text="xmp['r'].FirstName"></span></p>
 			<p>5 <span xmp-text="{{xmp.r.FirstName}}"></span></p>
-			<p><button xmp-success-url="/success" xmp-signout> Sign Out Now </button></p>
+			<p><button xmp-success-url="/success" xmp-signout={''}> Sign Out Now </button></p>
 
 			<p xmp-class="xmp.r.FirstName" className="base">Text</p>
 			<p xmp-class="{'red': xmp.r['FirstName'] === 'Allison', 'green': xmp.r.LastName === 'NewLastName12221' }" className="base">Text</p>
@@ -34,7 +35,7 @@ export default () => {
 				<div>
 					<h2>xmp-async</h2>
 					<p>The <b>xmp-async</b> help you control whether certain ADORs are be fetched asynchronously.</p>
-					<img title="xmp.r['FirstName']" xmp-image-asset="xmp.r['MyImage']" alt="Person" xmp-async />
+					<img title="xmp.r['FirstName']" xmp-image-asset="xmp.r['MyImage']" alt="Person" xmp-async={''} />
 				</div>
 				<div>
 					<h3>xmp-load-ador</h3>
@@ -43,19 +44,19 @@ export default () => {
 				<div>
 					<h2>xmp-clicked-trigger</h2>
 					<p> <b>xmp-clicked-trigger</b> attribute can be placed on a clickable element to trigger email sending when that element is clicked.</p>
-					<button xmp-clicked-triggered-email="E1">I Like! </button>
+					<button xmp-clicked-triggered-email="E2">I Like! </button>
 					<p> or update an email and send multiple emails</p>
-					<form xmp-update>
+					<form xmp-update={''}>
 						Email: <input type="text" xmp-write-ador="xmp.r.Email" /><br/>
-						<input class="btn-primary" type="submit" 
+						<input className="btn-primary" type="submit" 
 							value="Update" xmp-tracking-action="form submitted" 
-							xmp-success-trigger="E1,E2" />
+							xmp-success-trigger="E2" />
 					</form> 
 				</div>
 				<div>
 					<h3>xmp-update-on-page-load</h3>
 					<p>update values for a recipient as soon as the page loads.</p>
-				<div xmp-update-on-page-load xmp-ador="xmp.r['Visited']" xmp-value="1"></div>
+				<div xmp-update-on-page-load={''} xmp-ador="xmp.r['State']" xmp-value="1"></div>
 				</div>
 				<h3>xmp-show</h3>
 				<p>xmp-show attribute can be added to any HTML element to determine whether it is visible or not. The attribute value should be an ADOR name, whose value is true or false.</p>
@@ -77,23 +78,23 @@ export default () => {
 			<div>
 				<h3>xmp-refer</h3>
 				<p>The xmp-refer attribute can be used in form element to extend your recipient base</p>
-				<form xmp-refer >
-				<input referrer-id type="text" xmp-write-ador="xmp.referredRecipient.ReferedByID" />
-				<div class="form__section">
-					<div class="form__group-title">First Name:</div>
-					<div class="form__group">
-					<input class="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['First Name']" />
+				<form xmp-refer={''} >
+				<input referrer-id={''} type="text" xmp-write-ador="xmp.referredRecipient.ReferedByID" />
+				<div className="form__section">
+					<div className="form__group-title">First Name:</div>
+					<div className="form__group">
+					<input className="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['First Name']" />
 					</div>
 				</div>
 
-				<div class="form__section">
-					<div class="form__group-title">Last Name:</div>
-					<div class="form__group">
-					<input class="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['Last Name']" />
+				<div className="form__section">
+					<div className="form__group-title">Last Name:</div>
+					<div className="form__group">
+					<input className="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['Last Name']" />
 					</div>
 				</div>     		
-				<button class="btn btn__primary" type="submit">
-					<span class="btn__content" >Save</span>
+				<button className="btn btn__primary" type="submit">
+					<span className="btn__content" >Save</span>
 				</button>
 				</form>
 			</div>
@@ -101,21 +102,22 @@ export default () => {
 				<h3>xmp-repeat</h3>
 				<p>The xmp-repeat attribute is intended to be used with Table ADORs. Table ADOR values are arrays of items, where each item is a dictionary containing keys for the table columns, with matching values for the items.</p>
 				<ul>
-					<div xmp-repeat="item in xmp.Contacts">
+				<div xmp-repeat="item in xmp.r.Kids">
 					<li>
-						<span xmp-repeat-value="item['ID']"></span> 
-						<span xmp-repeat-value="item['Name']"></span>
+					(<span xmp-repeat-value="item['Kid ID']"></span>)
+					<span xmp-repeat-value="item['Kid name']"></span>
+					<span xmp-repeat-value="item['FirstName']"></span> [Game: <span xmp-repeat-value="item['Favorite Game']"></span>]
 					</li>
-					</div>
+				</div>
 				</ul>
 			</div>
 			<div>
 				<h4>xmp-tracking-action</h4>
 				<p>Tracking for an XMPL page </p>
-				<form xmp-update xmp-success-track-action="update" xmp-failure-track-action="update failure">
+				<form xmp-update={''} xmp-success-track-action="update" xmp-failure-track-action="update failure">
 					Click submit to trigger tracking
-				<input class="btn-primary" type="submit" 
-								value="save" xmp-success-url="thanks.html" xmp-tracking-action="form submitted:CTA" />
+				<input className="btn-primary" type="submit" 
+								value="save" xmp-success-url="/success" xmp-tracking-action="form submitted:CTA" />
 				</form> 
 			</div>
 			<div>
@@ -124,13 +126,13 @@ export default () => {
 				<ul>
 				<li> Example 1: 
 					<p> 
-						<a href="#" class="button special" xmp-unsubscribe="true" xmp-success-url="unsubscribed.html" 
-						xmp-failure-url="unsuscribedFailed.html" >Unsubscribe</a>
+						<a href="#" className="button special" xmp-unsubscribe="true" xmp-success-url="/success" 
+						xmp-failure-url="/failure" >Unsubscribe</a>
 					</p>
 				</li>
 				<li> Example 2: 
 					<p> 
-					<a href="" class="button" xmp-unsubscribe="false" xmp-success-js="alert('action completed successfully');" 
+					<a href="" className="button" xmp-unsubscribe="false" xmp-success-js="alert('action completed successfully');" 
 					xmp-failure-js="alert('action could not succeed');">Subscribe</a>
 					</p>
 				</li>
