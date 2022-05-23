@@ -13,5 +13,5 @@ User guide and reference documentation can be found at https://github.com/XMPieL
 You can use the following username and password to login through example's login pages
 
 
-Username: Allison.White \
-Password: 200038 
+Username: Allison.White (combines FirstName and LastName ADORs using this format `FirstName.LastName` ) \
+Password: 200038 (Using ID ADOR for the same user `ID`)
