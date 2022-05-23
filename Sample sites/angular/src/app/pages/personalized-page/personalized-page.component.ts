@@ -18,7 +18,6 @@ export class PersonalizedPageComponent implements OnInit {
   }
 
   xmpReady = () => {
-    console.log((window as any).xmpProvider.store.xmp);
     this._rid = (window as any).xmpProvider.store.xmp.recipientID;
     this.cdr.detectChanges();
   }
