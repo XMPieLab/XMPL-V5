@@ -8,3 +8,10 @@ The technology is built on javascript code, making it very easy to integrate int
 The XMPie XMPL server is the server that connects your XMPie campaign with your webpages. The server defines a collection of REST services with which the XMPL library communicates, and makes available for the webpages in form of HTML tags and javascript.
 
 User guide and reference documentation can be found at https://github.com/XMPieLab/XMPL-NG/wiki
+
+## Demo User
+You can use the following username and password to login through example's login pages
+
+
+Username: Allison.White \
+Password: 200038 
