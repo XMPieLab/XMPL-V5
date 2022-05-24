@@ -8,8 +8,9 @@ describe('UpdateWithAngularSyntaxPersonalizedPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdateWithAngularSyntaxPersonalizedPageComponent ]
-    })
+    declarations: [UpdateWithAngularSyntaxPersonalizedPageComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   });
 
