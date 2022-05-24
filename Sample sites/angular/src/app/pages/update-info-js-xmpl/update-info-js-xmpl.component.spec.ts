@@ -8,8 +8,9 @@ describe('UpdateInfoJsXmplComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdateInfoJsXmplComponent ]
-    })
+    declarations: [UpdateInfoJsXmplComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   });
 

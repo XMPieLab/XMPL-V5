@@ -8,8 +8,9 @@ describe('UpdatePersonalizedPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdatePersonalizedPageComponent ]
-    })
+    declarations: [UpdatePersonalizedPageComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   });
 
