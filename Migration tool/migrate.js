@@ -1,13 +1,5 @@
-/*!
- * ==========================================================
- * Migration tool 1.0.0, build 1
- * ==========================================================
- * Copyright 2021 XMPie, LTD.
- * ==========================================================
- */
 const { JSDOM } = require('jsdom')
 const fs = require('fs')
-const fsp = fs.promises
 const path = require('path')
 const { controllers, directives, version } = require('./config')
 const fsPromises = fs.promises;
@@ -90,6 +82,9 @@ function unsupportedComment(notSupportedAttr) {
 }
 
 function addFileComment(notSupportedAttr, htmlDoc) {
+  if (notSupportedAttr.length === 0) {
+    return htmlDoc
+  }
   const unsupported = unsupportedComment(notSupportedAttr)
   return unsupported + htmlDoc
 }
@@ -100,8 +95,16 @@ function updateVersion(string) {
 }
 
 async function addLogs(baseDir, file, notSupportedAttr) {
+  if (notSupportedAttr.length === 0) return
   const base = path.join(baseDir, '..', 'xmplNG')
   const comments = `${file.path}\n${unsupportedComment(notSupportedAttr)}\n`;
+
+  try {
+    fs.unlinkSync(`${base}/log.txt`)
+  } catch (error) {
+    console.log(error)
+  }
+
   try {
     await fsPromises.writeFile(`${base}/log.txt`, comments, { flag: 'a+' })
     console.log('Logs were added')
@@ -110,8 +113,22 @@ async function addLogs(baseDir, file, notSupportedAttr) {
   }
 }
 
+function convertRepeatValue(document) {
+  const xmpRepeat = document.querySelectorAll('[xmp-repeat]')
+  const expressionsRe = /{{(.*?)}}/gm
+  xmpRepeat.forEach(item => {
+    function callback(match) {
+      const m = match.substring(2, match.length - 2)
+      return `<span xmp-repeat-value="${m}"></span>`
+    }
+
+    // eslint-disable-next-line no-param-reassign
+    item.innerHTML = item.outerHTML.replace(expressionsRe, callback)
+  })
+}
+
 async function main(file, baseDir) {
-  const html = await fsp.readFile(file.path, 'utf8')
+  const html = await fsPromises.readFile(file.path, 'utf8')
   const { window } = new JSDOM(html)
   const { document } = window
 
@@ -137,6 +154,7 @@ async function main(file, baseDir) {
    * Convert Angular syntax {{template}} to xmp-text directives
    */
   convertSyntaxText(document, nodes)
+  convertRepeatValue(document)
   const base = path.join(baseDir, '..', 'xmplNG', file.absolutePath)
   const htmlDoc = document.documentElement.outerHTML
   const newHTML = addFileComment(notSupportedAttr, htmlDoc)
