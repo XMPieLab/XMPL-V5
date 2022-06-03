@@ -8,9 +8,14 @@
   <link rel="stylesheet" href="./../style.css">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
   <script src="./../xmpcfg.js"></script>
+  <script>
+    var xmpcustom = {
+      loginUrl: '/pages/signin.html'
+    }
+  </script>
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-  <script src="./../xmpl.min.js"></script>
+  <script src="https://ajax.xmcircle.com/ajax/libs/XMPL-NG/4.1/xmpl.min.js"></script>
 </head>
 
 <body>
@@ -18,6 +23,7 @@
     <p  class="title">
       Welcome <span xmp-text="xmp.r['FirstName']"></span> <span xmp-text="xmp.r['LastName']"></span>!
     </p>
+    <button class="btn btn__primary" xmp-signout xmp-success-url="signin.html">Sign out</button>
     <p>1 <span xmp-text="xmp.r.FirstName"></span></p>
     <p>2 <span xmp-text="xmp.r['FirstName']"></span></p>
     <p>3 <span xmp-text="xmp['r']['FirstName']"></span></p>
@@ -39,25 +45,25 @@
       </div>
     </div>
     <div>
-      <h2>xmp-async</h2>
-      <p>The <b>xmp-async</b> help you control whether certain ADORs are be fetched asynchronously.</p>
+      <h3>xmp-async</h3>
+      <p>The xmp-async help you control whether certain ADORs are be fetched asynchronously.</p>
       <img title="xmp.r['FirstName']" xmp-image-asset="xmp.r['MyImage']" alt="Person" xmp-async />
     </div>
     <div>
       <h3>xmp-load-ador</h3>
-      <div xmp-load-ador="FirstName,MyImage"></div> 
+      <div xmp-load-ador="FirstName,MyImage"><span xmp-text="xmp.r.FirstName"></span></div>
     </div>
     <div>
-      <h2>xmp-clicked-trigger</h2>
-      <p> <b>xmp-clicked-trigger</b> attribute can be placed on a clickable element to trigger email sending when that element is clicked.</p>
+      <h3>xmp-clicked-trigger</h3>
+      <p>xmp-clicked-trigger attribute can be placed on a clickable element to trigger email sending when that element is clicked.</p>
       <button xmp-clicked-trigger="E2">I Like! </button>
-      <p> or update an email and send multiple emails</p>
+      <p>or update an email and send multiple emails</p>
       <form xmp-update>
         Email: <input type="text" xmp-write-ador="xmp.r.Email"><br/>
         <input class="btn-primary" type="submit" 
             value="Update" xmp-tracking-action="form submitted" 
             xmp-success-trigger="E2">
-      </form> 
+      </form>
     </div>
     <div>
       <h3>xmp-update-on-page-load</h3>
@@ -96,13 +102,12 @@
             <input class="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['FirstName']" />
           </div>
         </div>
-  
         <div class="form__section">
           <div class="form__group-title">Last Name:</div>
           <div class="form__group">
             <input class="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['LastName']" />
           </div>
-        </div>     		
+        </div>
         <button class="btn btn__primary" type="submit">
           <span class="btn__content" >Save</span>
         </button>
@@ -122,28 +127,42 @@
         </ul>
     </div>
     <div>
-      <h4>xmp-tracking-action</h4>
+      <h3>xmp-tracking-action</h3>
       <p>Tracking for an XMPL page </p>
-      <form xmp-update xmp-success-track-action="update" xmp-failure-track-action="update failure">
+      <form
+        xmp-update xmp-success-track-action="update"
+        xmp-failure-track-action="update failure">
           Click submit to trigger tracking
-      <input class="btn-primary" type="submit" 
-                        value="save" xmp-success-url="success-update.html" xmp-tracking-action="form submitted:CTA">
-    </form> 
+        <input
+          class="btn-primary"
+          type="submit"
+          value="save"
+          xmp-success-url="success-update.html"
+          xmp-tracking-action="form submitted:CTA">
+      </form>
     </div>
     <div>
       <h3>xmp-unsubscribe</h3>
       <p>The xmp-unsubscribe is used by the recipient to opt-out from getting further email.</p>
       <ul>
-        <li> Example 1: 
-            <p> 
-               <a href="#" class="button special" xmp-unsubscribe="true" xmp-success-url="success.html" 
-                xmp-failure-url="failed.html" >Unsubscribe</a>
+        <li> Example 1:
+            <p>
+               <a
+                href="#"
+                class="button special"
+                xmp-unsubscribe="true"
+                xmp-success-url="success.html"
+                xmp-failure-url="failed.html">Unsubscribe</a>
             </p>
         </li>
-        <li> Example 2: 
-          <p> 
-            <a href="" class="button" xmp-unsubscribe="false" xmp-success-js="alert('action completed successfully');" 
-            xmp-failure-js="alert('action could not succeed');">Subscribe</a>
+        <li> Example 2:
+          <p>
+            <a
+              href="#"
+              class="button"
+              xmp-unsubscribe="false"
+              xmp-success-js="alert('action completed successfully');"
+              xmp-failure-js="alert('action could not succeed');">Subscribe</a>
           </p>
       </li>
       </ul>
