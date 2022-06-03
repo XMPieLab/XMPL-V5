@@ -3,6 +3,10 @@ body {
   color: black !important;
 }
 
+h3 {
+  color: darkblue;
+}
+
 .container {
 	width: 100%;
 	max-width: 1200px;
