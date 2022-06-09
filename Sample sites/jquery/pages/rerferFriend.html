@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Xmp-refer page</title>
+  <link rel="stylesheet" href="./../style.css">
+	<script>
+    var xmpcfg = {access: { accessToken: '8ae058d5-31f0-4e12-8a47-9f82fc6df6ef_8b94cb87-6117-4240-8ce7-c642d0e3f818_985b4bbf79e94686a0e67ce6434877b0', url: 'http://176.34.252.52/XMPieXMPL_REST_API', circleProjectID:'8b94cb87-6117-4240-8ce7-c642d0e3f818', circleProjectName: 'XMPL SDK Example - New2022' }};
+  </script>
+  <script src="https://ajax.xmcircle.com/ajax/libs/XMPL-NG/4.1/xmpl.min.js"></script>
+</head>
+
+<body class="container" xmp-personalized-controller="">
+  <h3 class="title">Refer friend</h3>
+  <p>Please enter your friend's information:</p>
+	<div class="grid grid--column">
+	<form class="xmp-form-sample" xmp-refer="true" xmp-success-url="thanksRefer.html">
+    <div class="form__section">
+      <div class="form__group-title">First Name </div>
+      <div class="form__group">
+        <input class="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['FirstName']" />
+      </div>
+    </div>
+    <div class="form__section">
+      <div class="form__group-title">Last Name </div>
+      <div class="form__group">
+        <input class="input__element" type="text" size="30" xmp-write-ador="xmp.referredRecipient['LastName']" />
+      </div>
+    </div>
+    <button class="btn btn__primary" type="submit" >
+      <span class="btn__content" >Register friend</span>
+    </button>
+		</form>
+	</div>
+</body>
+</html>
