@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <title>Thanks Refer</title>
+	<script>
+    var xmpcfg = {access: { accessToken: '8ae058d5-31f0-4e12-8a47-9f82fc6df6ef_8b94cb87-6117-4240-8ce7-c642d0e3f818_985b4bbf79e94686a0e67ce6434877b0', url: 'http://176.34.252.52/XMPieXMPL_REST_API', circleProjectID:'8b94cb87-6117-4240-8ce7-c642d0e3f818', circleProjectName: 'XMPL SDK Example - New2022' }};
+  </script>
+  <script src="https://ajax.xmcircle.com/ajax/libs/XMPL-NG/4.1/xmpl.min.js"></script>
+</head>
+
+<body xmp-personalized-controller>
+  <div class="section-title">
+    <p>
+      <span id="firstName">
+        <span xmp-text="Thanks {{xmp.r['FirstName']}}. "></span>
+      </span>
+      <span id="referredRecipient">
+        <span xmp-text="We will be with {{xmp.referredRecipient['FirstName']}} {{xmp.referredRecipient['LastName']}} soon."></span>
+      </span>
+    </p>
+  </div>
+</body>
+</html>
