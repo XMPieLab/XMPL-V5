@@ -6,7 +6,7 @@ export default () => {
 	useXmpl();
 
 	return (
-		<div xmp-anonymous-controller={""} className='container'> 
+		<div xmp-anonymous-controller={""} xmp-remember-recipient={"true"} className='container'>
 			<div className='grid grid--column'>
 				<div>
 					<h3 className='title'>Registration form</h3>

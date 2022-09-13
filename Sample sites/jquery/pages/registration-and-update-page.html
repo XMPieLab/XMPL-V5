@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <div class="container" xmp-anonymous-controller xmp-turn-off-default-error="true">
+  <div class="container" xmp-anonymous-controller xmp-turn-off-default-error="true" xmp-remember-recipient="true">
     <div id="form-registration" class="grid grid--column">
       <div>
         <h3 class="title">Registration form</h3>
@@ -50,7 +50,7 @@
             </div>
           </div>
           <button class="btn btn__primary" type="submit">
-            <span class="btn__content" >Log in</span>
+            <span class="btn__content" >Register</span>
           </button>
         </form>
       </div>
@@ -94,6 +94,7 @@
   <script>
     function onLoad() {
       const getRecipientInfo = () => {
+        console.log('getRecipientInfo')
         if (window.xmpProvider.store.xmp.recipientID) {
           const recipientData = document.getElementById('form-recipient');
           const registrationForm = document.getElementById('form-registration');
@@ -104,6 +105,10 @@
       window.xmpProvider.store.subscribe(getRecipientInfo)
     }
     window.addEventListener('load', onLoad)
+
+    window.onError = function() {
+      console.log('error')
+    }
   </script>
 </body>
 </html>
