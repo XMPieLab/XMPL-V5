@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-update-with-angular-syntax-personalized-page',
@@ -13,7 +13,7 @@ export class UpdateWithAngularSyntaxPersonalizedPageComponent implements OnInit 
   private _lastName: string = '';
   private _email: string = '';
   private _feedback: string = '';
-  form: FormGroup;
+  form: UntypedFormGroup;
 
   constructor() { }
 
@@ -24,11 +24,11 @@ export class UpdateWithAngularSyntaxPersonalizedPageComponent implements OnInit 
   }
 
   createFormGroup() {
-    this.form = new FormGroup({
-      FirstName: new FormControl(''),
-      LastName: new FormControl(''),
-      Email: new FormControl(''),
-      Feedback: new FormControl('')
+    this.form = new UntypedFormGroup({
+      FirstName: new UntypedFormControl(''),
+      LastName: new UntypedFormControl(''),
+      Email: new UntypedFormControl(''),
+      Feedback: new UntypedFormControl('')
     });
   }
 
