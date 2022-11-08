@@ -53,6 +53,8 @@ module.exports = {
     'xmp-signuot',
     'xmp-text-asset',
     'xmp-html-asset',
+    'xmp-video',
   ],
-  version: '4.1',
+  version: '4.1.1',
+  libUrl: 'https://ajax.xmcircle.com/ajax/libs/XMPL-NG/4.1.1/xmpl.min.js',
 }

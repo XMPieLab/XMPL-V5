@@ -1,7 +1,12 @@
 const { JSDOM } = require('jsdom')
 const fs = require('fs')
 const path = require('path')
-const { controllers, directives, version } = require('./config')
+const {
+  controllers,
+  directives,
+  version,
+  libUrl,
+} = require('./config')
 const fsPromises = fs.promises;
 
 const errorOutput = (error) => console.log(`ERROR :: ${error}`)
@@ -10,8 +15,7 @@ const removeFilePart = dirname => path.parse(dirname).dir;
 
 const baseName = filename => path.parse(filename).base;
 
-const OLD_NAME_LIB = 'xmp.min.js'
-const NEW_NAME_LIB = 'xmpl.min.js'
+const LIST_OF_NOT_SUPPORTED_ATTR = []
 
 function expressionTest(str) {
   const expressionsRe = /{{(.*?)}}/gm
@@ -32,7 +36,8 @@ function insertComments(document) {
   const notSupportedAttr = []
   if (xmpAttr.length > 0) {
     xmpAttr.forEach(attr => {
-      const elements = document.body.querySelectorAll(`[${attr}]`)
+      const elements = document.querySelectorAll(`[${attr}]`)
+
       elements.forEach(el => {
         const parent = el.parentElement
         const commentBeforeAttr = document.createComment(`${attr} not yet supported in version ${version}`)
@@ -76,8 +81,8 @@ function convertSyntaxText(document, node, includeWhitespaceNodes) {
 
 function unsupportedComment(notSupportedAttr) {
   return '<!-- ==========================================================\n'
+  + `Not yet supported attributes in version ${version}:\n`
   + `${notSupportedAttr.join('\n')}\n`
-  + `not yet supported in version ${version}\n`
   + '* ==========================================================  -->\n\n';
 }
 
@@ -85,32 +90,27 @@ function addFileComment(notSupportedAttr, htmlDoc) {
   if (notSupportedAttr.length === 0) {
     return htmlDoc
   }
+
   const unsupported = unsupportedComment(notSupportedAttr)
   return unsupported + htmlDoc
 }
 
-function updateVersion(string) {
-  const reBuild = /xmpl\/([a-zA-Z0-9-. ]*)\/xmp\/js/ig
-  return string.replace(reBuild, `XMPL-NG/${version}`).replace(OLD_NAME_LIB, NEW_NAME_LIB)
-}
-
-async function addLogs(baseDir, file, notSupportedAttr) {
-  if (notSupportedAttr.length === 0) return
-  const base = path.join(baseDir, '..', 'xmplNG')
-  const comments = `${file.path}\n${unsupportedComment(notSupportedAttr)}\n`;
-
-  try {
-    fs.unlinkSync(`${base}/log.txt`)
-  } catch (error) {
-    console.log(error)
-  }
-
-  try {
-    await fsPromises.writeFile(`${base}/log.txt`, comments, { flag: 'a+' })
+function addLogs(baseDir) {
+  const file = fs.createWriteStream(`${baseDir}/log.txt`);
+  file.on('error', (error) => { console.log(error) });
+  LIST_OF_NOT_SUPPORTED_ATTR.forEach(value => {
+    file.write('Path ::\n')
+    file.write(`${value.path}\r\n\n`)
+    file.write('Attributes ::\n')
+    value.attr.forEach(item => {
+      file.write(`${item}\r\n`)
+    })
+    file.write('-------------------------------------------------------------------------------\n\n')
+  });
+  file.on('finish', () => {
     console.log('Logs were added')
-  } catch (error) {
-    console.log(error)
-  }
+  })
+  file.end();
 }
 
 function convertRepeatValue(document) {
@@ -127,10 +127,38 @@ function convertRepeatValue(document) {
   })
 }
 
+function updateVideoAdor(document) {
+  const videos = document.querySelectorAll('video')
+  videos.forEach(video => {
+    const videoAdor = video.getAttribute('ng-if')
+
+    if (videoAdor) {
+      video.setAttribute('xmp-video', videoAdor)
+
+      const source = video.querySelector('source')
+      if (source) {
+        source.removeAttribute('ng-src')
+        source.setAttribute('xmp-src', videoAdor)
+      }
+    }
+  })
+}
+
 async function main(file, baseDir) {
-  const html = await fsPromises.readFile(file.path, 'utf8')
+  const html = await fs.readFileSync(file.path, 'utf8')
   const { window } = new JSDOM(html)
   const { document } = window
+
+  const scriptTagLibrary = document.querySelector('[src$="/xmp/js/xmp.min.js"]')
+
+  if (scriptTagLibrary) {
+    scriptTagLibrary.setAttribute('src', libUrl)
+  }
+
+  const scriptTagXMDesign = document.querySelector('[src$="/xmp/js/ucreateXMDesign.js"]')
+  if (scriptTagXMDesign) {
+    scriptTagXMDesign.removeAttribute('src')
+  }
 
   const ngControllerAttr = document.body.getAttribute('ng-controller')
   controllers
@@ -142,6 +170,8 @@ async function main(file, baseDir) {
   }
 
   document.body.removeAttribute('ng-controller')
+
+  updateVideoAdor(document)
 
   const nodes = document.body
 
@@ -155,17 +185,22 @@ async function main(file, baseDir) {
    */
   convertSyntaxText(document, nodes)
   convertRepeatValue(document)
-  const base = path.join(baseDir, '..', 'xmplNG', file.absolutePath)
+  const base = path.join(baseDir, file.absolutePath)
   const htmlDoc = document.documentElement.outerHTML
   const newHTML = addFileComment(notSupportedAttr, htmlDoc)
-  const newVersion = updateVersion(newHTML)
+
   try {
-    await fsPromises.mkdir(base, { recursive: true })
-    await fsPromises.writeFile(`${base}/${file.name}`, newVersion)
+    if (!fs.existsSync(base)) {
+      fs.mkdirSync(base);
+    }
+    fs.writeFileSync(`${base}/${file.name}`, newHTML)
   } catch (error) {
     errorOutput(error)
   }
-  await addLogs(baseDir, file, notSupportedAttr)
+  LIST_OF_NOT_SUPPORTED_ATTR.push({
+    attr: notSupportedAttr,
+    path: file.path,
+  })
 }
 
 if (process.argv.length < 3) {
@@ -208,6 +243,9 @@ fs.lstat(fileName, async (err, stats) => {
     process.exit(0)
   }
 
+  const base = path.join(process.argv[2], '..', 'xmplNG');
+  await fsPromises.mkdir(base, { recursive: true });
+
   if (stats.isDirectory()) {
     await walk(fileName)
     const getFileExtension = (name) => path.parse(name).ext;
@@ -216,9 +254,16 @@ fs.lstat(fileName, async (err, stats) => {
       return extension.indexOf('html') > -1
     })
 
-    onlyHtmlFiles.forEach(item => {
-      main(item, fileName)
+    if (onlyHtmlFiles.length === 0) {
+      errorOutput('HTML files doesn\'t exists')
+      process.exit(0)
+    }
+
+    await onlyHtmlFiles.forEach(async item => {
+      await main(item, base)
     })
+
+    addLogs(base)
   }
 
   if (stats.isFile()) {
@@ -227,6 +272,6 @@ fs.lstat(fileName, async (err, stats) => {
       absolutePath: '',
       path: fileName,
     }
-    main(fileConfig, removeFilePart(fileName))
+    await main(fileConfig, base)
   }
 });
