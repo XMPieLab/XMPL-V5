@@ -19,7 +19,6 @@ function App() {
 				<div className='App-link'>
 					<NavLink to='/anonymous'>Anonymous page</NavLink>
 					<NavLink to='/personalized?rid=Allison.White'>Personalized page</NavLink>
-					<NavLink to='/login?rid=Allison.White'>Login Page</NavLink>
 				</div>
 			</header>
 			<section className={"App-body"}>
