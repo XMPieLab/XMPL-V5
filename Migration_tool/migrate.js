@@ -150,14 +150,33 @@ async function main(file, baseDir) {
   const { document } = window
 
   const scriptTagLibrary = document.querySelector('[src$="/xmp/js/xmp.min.js"]')
-
   if (scriptTagLibrary) {
     scriptTagLibrary.setAttribute('src', libUrl)
   }
 
+  const xmplConfig = document.querySelector('[src$="xmpcfg.js"]')
+  if (xmplConfig) {
+    const linkToConfig = xmplConfig.getAttribute('src')
+    xmplConfig.remove()
+    const parent = scriptTagLibrary.parentElement
+    const newElement = document.createElement('script')
+    newElement.setAttribute('src', linkToConfig)
+    parent.insertBefore(newElement, scriptTagLibrary)
+  }
+
   const scriptTagXMDesign = document.querySelector('[src$="/xmp/js/ucreateXMDesign.js"]')
   if (scriptTagXMDesign) {
-    scriptTagXMDesign.removeAttribute('src')
+    scriptTagXMDesign.remove()
+  }
+
+  const cssTagXMDesign = document.querySelector('[href$="/xmp/css/ucreateXMDesign.css"]')
+  if (cssTagXMDesign) {
+    cssTagXMDesign.remove()
+  }
+
+  const cssTagXmp = document.querySelector('[href$="/xmp/css/xmp.css"]')
+  if (cssTagXmp) {
+    cssTagXmp.remove()
   }
 
   const ngControllerAttr = document.body.getAttribute('ng-controller')
