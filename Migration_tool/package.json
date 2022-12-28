@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fast-glob": "^3.2.12",
+    "fs-extra": "^11.1.0",
     "jsdom": "^16.4.0"
   }
 }

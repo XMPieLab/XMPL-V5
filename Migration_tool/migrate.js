@@ -1,19 +1,16 @@
+/* eslint-disable no-restricted-syntax */
 const { JSDOM } = require('jsdom')
-const fs = require('fs')
+const fs = require('fs-extra')
 const path = require('path')
+const fg = require('fast-glob')
 const {
   controllers,
   directives,
   version,
   libUrl,
 } = require('./config')
-const fsPromises = fs.promises;
 
 const errorOutput = (error) => console.log(`ERROR :: ${error}`)
-
-const removeFilePart = dirname => path.parse(dirname).dir;
-
-const baseName = filename => path.parse(filename).base;
 
 const LIST_OF_NOT_SUPPORTED_ATTR = []
 
@@ -60,11 +57,9 @@ function convertSyntaxText(document, node, includeWhitespaceNodes) {
         const reCollectAdors = /xmp((\['r']\.?)|(\.r\.?))(([a-zA-Z0-9-$ ]+[["'}]?)|(\[['"].*?['"]]))/ig
         const match = wrapTemplate(inner.textContent).match(reCollectAdors)
         if (match && match.length) {
-          const span = document.createElement('span');
-          span.setAttribute('xmp-text', inner.textContent)
-          const parent = inner.parentNode
-          inner.remove()
-          parent.appendChild(span)
+          const newEl = inner.parentNode.innerHTML.replace(/(\{{+|\}}+)/g, '').replace(reCollectAdors, '<span xmp-text=$&></span>')
+          // eslint-disable-next-line no-param-reassign
+          inner.parentNode.innerHTML = newEl
         }
       }
     } else {
@@ -96,16 +91,16 @@ function addFileComment(notSupportedAttr, htmlDoc) {
 }
 
 function addLogs(baseDir) {
+  if (LIST_OF_NOT_SUPPORTED_ATTR.length === 0) {
+    return
+  }
   const file = fs.createWriteStream(`${baseDir}/log.txt`);
-  file.on('error', (error) => { console.log(error) });
+  file.on('error', errorOutput)
+  file.write(`[${new Date()}]\n`)
   LIST_OF_NOT_SUPPORTED_ATTR.forEach(value => {
-    file.write('Path ::\n')
-    file.write(`${value.path}\r\n\n`)
-    file.write('Attributes ::\n')
-    value.attr.forEach(item => {
-      file.write(`${item}\r\n`)
-    })
-    file.write('-------------------------------------------------------------------------------\n\n')
+    file.write(`Path :: ${value.path}\r\n`)
+    file.write(`Attributes :: [${value.attr.join(', ')}]\r\n`)
+    file.write('-------------------------------------------------------------------------------\n')
   });
   file.on('finish', () => {
     console.log('Logs were added')
@@ -119,7 +114,7 @@ function convertRepeatValue(document) {
   xmpRepeat.forEach(item => {
     function callback(match) {
       const m = match.substring(2, match.length - 2)
-      return `<span xmp-repeat-value="${m}"></span>`
+      return `<span xmp-repeat-value="${m.replace(/"/g, "'")}"></span>`
     }
 
     // eslint-disable-next-line no-param-reassign
@@ -144,8 +139,8 @@ function updateVideoAdor(document) {
   })
 }
 
-async function main(file, baseDir) {
-  const html = await fs.readFileSync(file.path, 'utf8')
+async function main(currentPath) {
+  const html = await fs.readFileSync(currentPath, 'utf8')
   const { window } = new JSDOM(html)
   const { document } = window
 
@@ -204,93 +199,69 @@ async function main(file, baseDir) {
    */
   convertSyntaxText(document, nodes)
   convertRepeatValue(document)
-  const base = path.join(baseDir, file.absolutePath)
-  const htmlDoc = document.documentElement.outerHTML
+  const htmlDoc = document.documentElement.outerHTML.replace(/&quot;/g, "'")
   const newHTML = addFileComment(notSupportedAttr, htmlDoc)
 
-  try {
-    if (!fs.existsSync(base)) {
-      fs.mkdirSync(base);
-    }
-    fs.writeFileSync(`${base}/${file.name}`, newHTML)
-  } catch (error) {
-    errorOutput(error)
+  if (notSupportedAttr.length > 0) {
+    LIST_OF_NOT_SUPPORTED_ATTR.push({
+      attr: notSupportedAttr,
+      path: currentPath,
+    })
   }
-  LIST_OF_NOT_SUPPORTED_ATTR.push({
-    attr: notSupportedAttr,
-    path: file.path,
-  })
+
+  return newHTML
 }
 
-if (process.argv.length < 3) {
-  errorOutput('please provide file name')
-  process.exit(0)
-}
-
-const fileName = path.resolve(__filename, process.argv[2])
-
-if (!fs.existsSync(fileName)) {
-  errorOutput('file name doesn\'t exists')
-  process.exit(0)
-}
-
-const filesArr = []
-async function walk(dir) {
-  const files = await fsPromises.readdir(dir)
-  await Promise.all(files.map(async file => {
-    const filePath = path.join(dir, file)
-    const stats = await fsPromises.lstat(filePath)
-
-    if (stats.isDirectory()) {
-      return walk(filePath)
+async function copyAndUpdateFile(src, dist, filename) {
+  try {
+    await fs.copy(src, filename ? `${dist}/${filename}` : dist)
+    const entryPath = path.join(dist, '**/*.html').replace(/\\/g, '/')
+    const entries = await fg([entryPath])
+    for await (const entry of entries) {
+      const newHTML = await main(entry)
+      fs.writeFileSync(entry, newHTML)
     }
-    if (stats.isFile()) {
-      filesArr.push({
-        name: file,
-        absolutePath: removeFilePart(path.relative(fileName, filePath)),
-        path: filePath,
-      })
-      return filePath
-    }
-  }))
+    await addLogs(dist)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
-// eslint-disable-next-line consistent-return
-fs.lstat(fileName, async (err, stats) => {
-  if (err) {
-    errorOutput(err)
+function init() {
+  const inputIndex = process.argv.indexOf('--input')
+  let input = '';
+  if (inputIndex === -1) {
+    errorOutput('please provide input folder url')
     process.exit(0)
   }
 
-  const base = path.join(process.argv[2], '..', 'xmplNG');
-  await fsPromises.mkdir(base, { recursive: true });
+  input = process.argv[inputIndex + 1]
 
-  if (stats.isDirectory()) {
-    await walk(fileName)
-    const getFileExtension = (name) => path.parse(name).ext;
-    const onlyHtmlFiles = filesArr.filter(item => {
-      const extension = getFileExtension(item.path)
-      return extension.indexOf('html') > -1
-    })
+  if (!input) {
+    errorOutput('please provide input folder url')
+    process.exit(0)
+  }
 
-    if (onlyHtmlFiles.length === 0) {
-      errorOutput('HTML files doesn\'t exists')
+  const outputIndex = process.argv.indexOf('--output');
+  let outputSrcValue;
+  if (outputIndex > -1) {
+    outputSrcValue = process.argv[outputIndex + 1]
+  }
+  const output = outputSrcValue || path.join(input, '..', 'xmplNG')
+
+  fs.lstat(input, async (err, stats) => {
+    if (err) {
+      errorOutput(err)
       process.exit(0)
     }
 
-    await onlyHtmlFiles.forEach(async item => {
-      await main(item, base)
-    })
-
-    addLogs(base)
-  }
-
-  if (stats.isFile()) {
-    const fileConfig = {
-      name: baseName(fileName),
-      absolutePath: '',
-      path: fileName,
+    if (stats.isFile()) {
+      const filename = path.basename(input)
+      copyAndUpdateFile(input, output, filename)
+    } else {
+      copyAndUpdateFile(input, output)
     }
-    await main(fileConfig, base)
-  }
-});
+  })
+}
+
+init()
