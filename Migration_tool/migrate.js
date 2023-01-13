@@ -57,7 +57,7 @@ function convertSyntaxText(document, node, includeWhitespaceNodes) {
         const reCollectAdors = /xmp((\['r']\.?)|(\.r\.?))(([a-zA-Z0-9-$ ]+[["'}]?)|(\[['"].*?['"]]))/ig
         const match = wrapTemplate(inner.textContent).match(reCollectAdors)
         if (match && match.length) {
-          const newEl = inner.parentNode.innerHTML.replace(/(\{{+|\}}+)/g, '').replace(reCollectAdors, '<span xmp-text=$&></span>')
+          const newEl = inner.parentNode.innerHTML.replace(/(\{{+|\}}+)/g, '').replace(reCollectAdors, '<span xmp-text="$&"></span>')
           // eslint-disable-next-line no-param-reassign
           inner.parentNode.innerHTML = newEl
         }
