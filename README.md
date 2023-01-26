@@ -1,4 +1,4 @@
-# XMPL NG (Beta version)
+# XMPL V5 (Beta version)
 Welcome to the XMPie XMPL NG.
 
 This is the central resource for information about XMPL, XMPie's language for personalizing URLs. Using this library you can easily build personalized webpages (PURLs) that are based on XMPie campaigns, with HTML tags.
