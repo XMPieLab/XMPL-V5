@@ -9,9 +9,3 @@ The XMPie XMPL server is the server that connects your XMPie campaign with your 
 
 User guide and reference documentation can be found at https://github.com/XMPieLab/XMPL-V5/wiki
 
-## Demo User
-You can use the following username and password to login through example's login pages
-
-
-Username: Allison.White (combines FirstName and LastName ADORs using this format `FirstName.LastName` ) \
-Password: 200038 (Using ID ADOR for the same user `ID`)
