@@ -5,8 +5,7 @@ export const Contact = () => {
 	const [isShowThanksBlog, setIsShowThanksBlog] = useState(false)
   useXmpl()
 
-	window.hideForm = (message) => {
-		alert(message)
+	window.hideForm = () => {
 		setIsShowThanksBlog(true)
     window.xmpProvider.bind(document.body).render()
 	}
