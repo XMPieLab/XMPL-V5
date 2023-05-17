@@ -59,7 +59,9 @@
 
 **[[Browser Support]]**
 
-**[[XMPL with React and Angular]]**
+**[[XMPL with Angular]]**
+
+**[[XMPL with React]]**
 
 ## Reference
 **[[Markup Reference]]**
