@@ -1,0 +1,1 @@
+Information about xmpResource can be found [here](https://github.com/XMPieLab/XMPL-SDK/wiki/xmpResource-Reference).
