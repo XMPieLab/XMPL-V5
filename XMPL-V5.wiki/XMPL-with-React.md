@@ -1,4 +1,6 @@
 # XMPL-React
+***We provide a package file with xmpl-react library (tgz file). The xmpl-react npm package can be [downloaded](https://github.com/XMPieLab/XMPL-V5/blob/main/xmpl-react%20package%20installation/xmpl-react-1.0.0.tgz) directly and can be used in your projects.***  
+
 The following tutorial will take you through the basics of creating a personalized website with xmpl-react hooks package.
 Before you begin:
 * [Download](https://github.com/XMPieLab/XMPL-V5/blob/main/XMPL-React-Tutorial-materials.zip) the tutorial materials.
@@ -21,8 +23,7 @@ To begin, unzip the XMPL ReactJS example zip. Use your favorite IDE to open the 
 **Note**: You should already have set up your campaign and downloaded the xmpcfg.js file as described in the Getting Started page.
 
 # Installation 
-We provide a package file with xmpl-react library (tgz file). You can [download](https://github.com/XMPieLab/XMPL-V5/blob/main/xmpl-react%20package%20installation/xmpl-react-1.0.0.tgz) the library package directly and use in your projects.  
-But now you need just use ***npm install*** command inside the root folder where the package.json is located (start folder). This will install all the dependencies we need.  
+Use the ***npm install*** command inside the root folder where the package.json is located (start folder). This will install all the dependencies we need.  
 
 # Configuration
 Open the ***xmpcfg.js*** file that you downloaded from your Circle project and copy the config object.  
