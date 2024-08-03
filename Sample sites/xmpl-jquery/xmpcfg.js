@@ -1,8 +1,9 @@
 var xmpcfg = {
-    access: {
-        accessToken: '8ae058d5-31f0-4e12-8a47-9f82fc6df6ef_1fdb5415-794f-4e1a-9912-093fc810bc64_e299a53d478a4276a769a8d815db4cc4',
-        url: 'http://176.34.252.52/XMPieXMPL_REST_API',
-        circleProjectID: '1fdb5415-794f-4e1a-9912-093fc810bc64',
-        circleProjectName: 'Sample'
-    }
-};
+	access: {
+		accessToken:
+			'841fba0a-ef98-4f9c-87b2-cfb7bb2026b6_c96a2e52-cd3a-4633-9cc8-5d7e1c32a428_60d7fac0d0d74b698441a02137140065',
+		url: 'https://marketingx.xmpie.net/XMPieXMPL_REST_API',
+		circleProjectID: 'c96a2e52-cd3a-4633-9cc8-5d7e1c32a428',
+		circleProjectName: 'XMPL Sample 5.0',
+	},
+}
