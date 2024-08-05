@@ -1,57 +1,47 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
-import logoIcon from './../assets/RoundTravel_Logo.png'
+import logo from '../images/RoundTravel_Logo.png'
+import { useEffect, useState } from 'react';
 
-/* eslint-disable jsx-a11y/anchor-is-valid */
 export const Header = () => {
-	const [ isShowMenu, setShowMenu ] = useState(false)
-	const showMenu = (e) => {
-		e.preventDefault()
-		setShowMenu(!isShowMenu)
-	}
-	return (
-		<>
-			<header id='header' className='alt'>
-				<Link to='/' className='logo'>
-					<img src={logoIcon} alt="Round Travel" />
-				</Link>
-				<nav>
-					<a onClick={showMenu}>Menu</a>
-				</nav>
-			</header>
+    const [isMenuVisible, setisMenuVisible] = useState(false);
+    const [scrollTop, setScrollTop] = useState(0);
+    const [isNavFixed, setisNavFixed] = useState(false);
+    const toggleMenu = () => {
+    document.body.className =  document.body.className === 'is-menu-visible' ? '' : 'is-menu-visible'
+        setisMenuVisible(!isMenuVisible)
+    }
 
-			<nav className={isShowMenu && 'visible'} id='menu' onClick={showMenu}>
-				<ul className='links'>
-					<li>
-						<Link to='/'>Home Page</Link>
-					</li>
-					<li>
-						<Link to='/content' xmp-tracking-action='Clicked Content'>
-							Content Page
-						</Link>
-					</li>
-					<li>
-						<a href='https://www.xmpie.com' xmp-tracking-action='Clicked XMPie'>
-							XMPie Website
-						</a>
-					</li>
-					<li>
-						<a
-							href='https://campus.xmpie.com'
-							xmp-tracking-action='Clicked Campus'
-						>
-							XMPie Campus
-						</a>
-					</li>
-				</ul>
-				<ul className='actions stacked'>
-					<li>
-						<Link to='/' className='button primary fit'>
-							Get Started
-						</Link>
-					</li>
-				</ul>
-			</nav>
-		</>
-	)
+    useEffect(()=>{
+        const handleScroll = (event) => {
+            setisNavFixed(scrollTop > 100)
+            setScrollTop(window.scrollY)
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    })
+    return (
+        <>
+            <header id="header" className= {isNavFixed ? 'reveal' : 'alt reveal'}>
+                <a href="" className="logo"><img src={logo} alt="'Round Travel"/></a>
+                <nav>
+                    <a onClick={toggleMenu} href="#menu">Menu</a>
+                </nav>
+            </header>
+            <nav id="menu">
+                <div className='inner'>
+                    <ul className="links">
+                        <li><a onClick={toggleMenu} href="">Home Page</a></li>
+                        <li><a onClick={toggleMenu} href="">Content Page</a></li>
+                        <li><a onClick={toggleMenu} href="https://www.xmpie.com">XMPie Website</a></li>
+                        <li><a onClick={toggleMenu} href="https://campus.xmpie.com">XMPie Campus</a></li>
+                    </ul>
+                    <ul className="actions stacked">
+                        <li><a onClick={toggleMenu} href="" className="button primary fit">Get Started</a></li>
+                    </ul>
+                </div>
+                <a className='close' href='' onClick={toggleMenu}>Close </a>
+            </nav>
+        </>
+    )
 }

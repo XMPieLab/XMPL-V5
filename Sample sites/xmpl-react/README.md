@@ -2,11 +2,6 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Before start
-
-Before you start the project download xmpcfg file from Circle and save to /public/xmpcfg.js.
-Tutorial how to [download](https://github.com/XMPieLab/XMPL-V5/wiki/Getting-Started#2-download-the-configuration-file) config file.
-
 ## Available Scripts
 
 In the project directory, you can run:
