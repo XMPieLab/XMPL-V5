@@ -1,7 +1,12 @@
 import clubLogo from '../images/ClubMemberLogo.png'
-import AnchorLink from 'react-anchor-link-smooth-scroll'
 import { XmplContext } from 'xmpl-react';
 import { useContext } from 'react';
+
+const smoothScroll = (event) => {
+    event.preventDefault()
+    const target = document.getElementById(event.currentTarget.getAttribute('href').slice(1))
+    target?.scrollIntoView({ behavior: 'smooth' })
+}
 
 export const Banner = () => {
     const { xmp } = useContext(XmplContext)
@@ -17,7 +22,7 @@ export const Banner = () => {
                         <p>Your personalized travel destination<br/>
                             brought to you by XMPie.</p>
                         <ul className="actions">
-                            <li><AnchorLink href="#one" className="button next scrolly">Get Started</AnchorLink></li>
+                            <li><a href="#one" className="button next scrolly" onClick={smoothScroll}>Get Started</a></li>
                         </ul>
                     </div>
                     <div className="col-3 col-lg-6 col-md-12">
